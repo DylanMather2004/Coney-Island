@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://bj2edb3myqqq1"]
+
+[ext_resource type="Script" path="res://Scripts/Character Scripts/Player.gd" id="1_swfwv"]
+[ext_resource type="Texture2D" uid="uid://dp3eqbnuwgs5w" path="res://Art/Temp/Temp-Coney-001.png" id="1_xjlym"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_juxm3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u0dk"]
+
+[sub_resource type="Animation" id="Animation_oryxv"]
+resource_name = "Attack 1"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Attackbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_fo4er"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Attackbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6cjio"]
+_data = {
+"Attack 1": SubResource("Animation_oryxv"),
+"RESET": SubResource("Animation_fo4er")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_swfwv")
+friction = 1.0
+acceleration = 1.0
+move_speed = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xjlym")
+
+[node name="Attackbox" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Attackbox"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_juxm3")
+disabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8u0dk")
+
+[node name="AttackAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6cjio")
+}
+
+[connection signal="body_entered" from="Sprite2D/Attackbox" to="." method="_on_attackbox_body_entered"]

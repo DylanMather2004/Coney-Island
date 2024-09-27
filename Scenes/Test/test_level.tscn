@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnpe5h6d2kb5u"]
+
+[ext_resource type="Texture2D" uid="uid://b3kaw3dffxrx7" path="res://icon.svg" id="1_bhoqx"]
+[ext_resource type="PackedScene" uid="uid://bj2edb3myqqq1" path="res://Prefabs/player.tscn" id="2_tl4xs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ma0i"]
+size = Vector2(126.791, 119)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(574.5, 585)
+scale = Vector2(9.10156, 1)
+texture = ExtResource("1_bhoqx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Icon"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon/StaticBody2D"]
+position = Vector2(0.274681, -1.5)
+shape = SubResource("RectangleShape2D_4ma0i")
+
+[node name="Player" parent="." instance=ExtResource("2_tl4xs")]
+position = Vector2(168, 151)
+jump_height = 500.0
+gravity = 600.0
+move_speed = 300.0
